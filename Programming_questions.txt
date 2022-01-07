@@ -1,0 +1,82 @@
+Jacinthe Beaudry 40126080
+
+
+pseudocode:
+
+Recursive: 
+
+Input: array of integers that ends in 0, index that is an integer for wich the sequence should start at.
+
+Output: a Boolean that indicates if the sequence can reach the final index
+
+HitZeroTester(int array[], int index) {
+	increment the amount of calls
+	IF the array is of length 0 or 1
+		return false
+	ELSE
+		TRY
+			IF index = length of the array - 1
+				return true
+			ELSE IF the index has already been visited
+				return false
+			ELSE 
+				mark the index as visited
+				return (HitZeroTester(array,index-array[index]) OR HitZeroTester(array,index+array[index])
+		CATCH the current index if it is out of bounds
+			return false
+}
+
+
+Stack:
+Input: array of integers that ends in 0, index that is an integer for wich the sequence should start at.
+
+Output: a Boolean that indicates if the sequence can reach the final index
+
+HitZeroTester(int array[], int index) {
+	Stack s
+	Boolean isTheSequencePossible <-- false
+	IF the array is of length 0 or 1
+		return false
+	ELSE
+		push index to s
+		WHILE s isn't empty AND isTheSequenceIsPossible = false
+			TRY
+				increment a static call counter
+				index <-- peek s
+				IF index = length of the array - 1
+					isTheSequencePossible <-- true
+				ELSE IF the index has already been visited
+					pop s
+				ELSE
+					mark the index as visited
+					push to s the index - array[index]
+					push to s the index + array[index]
+			CATCH the next current index if it is out of bounds
+				pop s
+		ENDWHILE
+	return isTheSequencePossible
+}
+
+
+
+Answers
+a)  
+ 
+Recursive:
+Time complexity: O(n)
+As this algorithm relies on binary recursion, HitZeroTester is composed of two recursive calls, all of which will call themselves twice. Since each index can't be visited more than once, the worst run will result in 2n calls, where n items create at most 2 calls. Since the base case runs in O(1), the total algorithm runs in O(n). 
+Space complexity: O(n)
+A recursive algorithm occupies proportionally as much space as the maximum depth of its recursion tree. Since 2n calls has a depth of n, HitZeroTester is O(n) in terms of space.
+
+Stack:
+
+Time complexity: O(n)
+The algorithm consists of variable assignment, which run in O(1), and a while loop that depends on the growth of the stack. A worst-scenario run will result in n loops inside the while loop, resulting in a total time complexity of O(n).
+
+Space complexity: O(n)
+Since we accumulate n items in the stack before popping them, the stack grows in O(n), making it a space complexity of O(n).
+
+
+b) I use binary recursion. Since I do not visit an index more than once, there is a possiblity of creating a 2n nodes in the recursion tree. The type of recursion does not affect the time and space complexity, as it operates under a ceiling of 2n calls. 
+
+c)I chose a stack over a queue or a list because recursive calls already utilize a stack to track the calls. Since I wrote the recursive algorithm first, I foundit easier to transition my code to iterative with a stack with the same complexity. The first version utilizes a recursion stack, so simulating recursion with a stack is most logical. 
